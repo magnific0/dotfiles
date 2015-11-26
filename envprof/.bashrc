@@ -36,7 +36,10 @@ bind '"\C-\e[B": next-history'
 
 export TEXMFLOCAL=$HOME/.local/share/texmf
 export LC_ALL=C
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+export SUDO_EDITOR="em"
+
+# Add local ruby gem directory to path if ruby is install at all
+hash ruby 2>/dev/null && export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
 source ~/.bash_aliases
 
-export SUDO_EDITOR="em"

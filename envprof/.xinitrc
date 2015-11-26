@@ -21,10 +21,5 @@ fi
 # exec startkde
 # exec startxfce4
 # ...or the Window Manager of your choice
-feh --bg-fill ~/bg.jpg
 
-# Add fucking display modes because shitty intel/xorg refuses to detect it properly
-# gtf 1920 1080 60
-xrandr --newmode "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
-xrandr --addmode DP1 1920x1080_60.00
-xrandr --output DP1 --mode 1920x1080_60.00
+[ ! -f ~/.xinitrc.$HOSTNAME ] && ~/.xinitrc.$HOSTNAME
