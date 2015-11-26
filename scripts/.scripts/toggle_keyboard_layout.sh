@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ -f /tmp/usactive ]; then
  setxkbmap -layout "us" -variant "dvorak"
  rm /tmp/usactive

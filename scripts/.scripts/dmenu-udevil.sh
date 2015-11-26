@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 [[ -f $HOME/.dmenurc ]] && . $HOME/.dmenurc || DMENU='dmenu -i'
 

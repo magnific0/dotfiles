@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #echo "awful.layout.set( awful.layout.suit.floating )" | awesome-client
 #export LD_PRELOAD=/usr/lib/libstdc++.so.6
 export MATLAB_JAVA=/usr/lib/jvm/default-runtime/

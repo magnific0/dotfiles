@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 wid=$(xdotool search --classname urxvtq)
 if [ -z "$wid" ]; then

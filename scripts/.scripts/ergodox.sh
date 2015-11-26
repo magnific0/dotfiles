@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 EDID=`xinput -list | grep ErgoDox | awk '{print $6}' | awk -F'=' '{print $2}'`
 if [ -n "$EDID" ]; then
     setxkbmap -device $EDID us

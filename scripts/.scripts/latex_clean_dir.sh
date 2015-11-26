@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo "Deleting temporary files in $0"
 rm -rf *.acn
 rm -rf *.acr

@@ -1,5 +1,5 @@
 
-#!/bin/bash
+#!/bin/sh
 max_res=$(xrandr | grep VGA1 -A 1 | tail -1 | awk '{ print $1 };')
 
 # RESOLUTION SETTINGS

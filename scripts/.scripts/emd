@@ -1,2 +1,2 @@
-#!/bin/bash
-/usr/bin/emacs --daemon
+#!/bin/sh
+emacs --daemon

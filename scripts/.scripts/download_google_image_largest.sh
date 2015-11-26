@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # FETch LArgest MAtch
 # Download the largest reverse image match of a linked image
 # Usage:

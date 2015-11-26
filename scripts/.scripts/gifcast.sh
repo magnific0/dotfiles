@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 TMP_AVI=$(mktemp /tmp/outXXXXXXXXXX.avi)
 ffcast -s % ffmpeg -y -f x11grab -show_region 1 -framerate 15 \
     -video_size %s -i %D+%c -codec:v huffyuv                  \

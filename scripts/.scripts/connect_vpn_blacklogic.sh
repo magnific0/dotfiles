@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 source /home/wacko/.dmenurc || $dmenu_style = ""
 select_and_connect() {
     blserv=`grep "." /home/wacko/.config/blacklogic.servers | dmenu -p ">" -i -l 10 $dmenu_style | awk ' {print $NF} '`

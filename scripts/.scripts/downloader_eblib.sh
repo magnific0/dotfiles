@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 for i in `seq 1 589`;
 do
     j=`printf "%04d" $i`

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 MAXBACKLIGHT=$(cat /sys/class/backlight/intel_backlight/max_brightness)
 CURBACKLIGHT=$(expr $(cat /sys/class/backlight/intel_backlight/brightness) \* 100 / $MAXBACKLIGHT)
 if [ -n "$1" ]; then

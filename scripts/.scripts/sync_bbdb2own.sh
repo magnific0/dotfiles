@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 cd ~/Gits/ASynK
 OCUSERPASS="$(gpg --decrypt ~/.owncloud.gpg)"
 OCUSER="$(echo ${OCUSERPASS} | awk '{print $1}')"

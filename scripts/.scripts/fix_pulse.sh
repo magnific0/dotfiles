@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 pulseaudio --kill
 killall pulseaudio
 killall -9 pulseaudio
