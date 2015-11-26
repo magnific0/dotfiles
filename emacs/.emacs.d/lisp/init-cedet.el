@@ -8,7 +8,7 @@
 
 ;; Do checkout of fresh CEDET, and use this config (don't forget to change path below)
 
-(setq cedet-root-path (file-name-as-directory "~/Gits/cedet/"))
+(setq cedet-root-path (file-name-as-directory "~/.emacs.d/repos/cedet/"))
 
 (load-file (concat cedet-root-path "cedet-devel-load.el"))
 (add-to-list 'load-path (concat cedet-root-path "contrib"))

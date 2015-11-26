@@ -1,0 +1,6 @@
+[submodule "emacs/.emacs.d/cedet"]
+	path = emacs/.emacs.d/cedet
+	url = https://github.com/emacsmirror/cedet.git
+[submodule "emacs/.emacs.d/repos/cedet"]
+	path = emacs/.emacs.d/repos/cedet
+	url = https://github.com/emacsmirror/cedet.git
