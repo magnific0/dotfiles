@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+usage() {
+        cat <<-EOF
+                usage: emdiff [-s]
+                 -s Edit as sudo
+                 -h Print help
+        EOF
+
+}
+
+diff_as_root=false
+
+emdiff_check() {
+
+    [ -f "$1" ] || { echo "File one doesn't exist"; exit 1; }
+    [ -f "$2" ] || { echo "File two doesn't exist"; exit 1; }
+    [ -s "$1" ] || { echo "File one is empty"; exit 1; }
+    [ -s "$2" ] || { echo "File two is empty"; exit 1; }
+
+}
+
+emdiff_compare() {
+
+    em --eval "(ediff-files \"$1\" \"$2\")"
+
+}
+
+
+while getopts 'hs:' opt; do
+        case "$opt" in
+            s)
+                diff_as_root=true
+                emdiff_check
+                emdiff_compare
+                ;;
+            h) usage && exit;;
+            /?) echo "Unrecognized command: $OPTARG";;
+        esac
+done

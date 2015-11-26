@@ -1,0 +1,1 @@
+for x in *.png; do convert -sigmoidal-contrast 10,90% +level-colors "#606060", "${x}" "grey/${x%.*}.png"; done; 

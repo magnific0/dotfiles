@@ -1,0 +1,122 @@
+#!/bin/sh
+
+# A POSIX variable
+# Reset in case getopts has been used previously in the shell.
+OPTIND=1
+
+usage() {
+    cat << EOF
+Usage: $0 [-scdtxh] file(s) [optional emacs args]
+
+Emacs client launcher wrapper
+
+OPTIONS:
+   -s    Edit as sudo
+   -c    Execute file checks
+   -d    Diff two files
+   -t    Run in terminal
+   -x    Run in new x window
+   -h    Print help
+
+$0 file1
+$0 -s -d -c file1 file2
+
+EOF
+
+}
+
+fchecks=false
+as_root=false
+workdir=$(pwd)
+dffmode=false
+
+# Check if command is run in terminal, set defaults
+if [ -t 0 ]; then
+    in_term=true
+else
+    in_term=false
+fi
+
+# Check if file exists or is empty
+file_check() {
+    [ -f "$1" ] || { echo "$1 doesn't exist"; exit 1; }
+    [ -s "$1" ] || { echo "$1 is empty"; exit 1; }
+}
+
+# Make the filename absolute (if needed) and add sudo (if req)
+file_name() {
+    # If file needs to be edited as root
+    if [ "$as_root" = true ]; then
+        sudopre="/sudo::"
+    else
+        sudopre=""
+    fi
+    # Check if path is relative or abs, make abs.
+    if [[ "${1:0:1}" == / || "${1:0:1}" == ~[/a-z] ]]; then
+        echo "$sudopre$1"
+    else
+        echo "$sudopre$workdir/$1"
+    fi
+}
+
+# Check whether two files are the same (diff mode only)
+file_ident_check() {
+    cmp --silent $1 $2 && { echo "$1 and $2 are the same"; exit 1; }
+}
+
+# Process all options
+while getopts 'scdtxh:' opt; do
+        case "$opt" in
+            s)
+                as_root=true
+                ;;
+            c)
+                fchecks=true
+                ;;
+            d)
+                dffmode=true
+                ;;
+            t)
+                in_term=true
+                ;;
+            x)
+                in_term=false
+                ;;
+            h)
+                usage
+                exit 0;;
+            /?)
+                echo "Unrecognized command: $OPTARG"
+                usage
+                exit 1
+                ;;
+        esac
+done
+shift `expr $OPTIND - 1`
+
+# Do file checks based on mode
+if [ "$fchecks" = true ]; then
+    file_check $1
+    if [ "$dffmode" = true ]; then
+        file_check $2
+        file_ident_check $1 $2
+    fi
+fi
+
+# Create emacs arguments for opening files
+if [ "$dffmode" = true ]; then
+    emargs="(ediff-files \"$(file_name $1)\" \"$(file_name $2)\")"
+    shift `expr 2`
+else
+    emargs="(find-file \"$(file_name $1)\")"
+    shift `expr 1`
+fi
+
+# Call emacs client in terminal or root
+if [ "$in_term" = true ]; then
+    emacsclient -t --eval "${emargs}" ${@}
+else
+    emacsclient -nc --eval "${emargs}" ${@}
+fi
+
+exit 0

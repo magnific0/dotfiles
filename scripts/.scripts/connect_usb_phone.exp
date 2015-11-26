@@ -1,0 +1,78 @@
+#!/usr/bin/expect
+puts "Please enter your sudo password:"
+stty -echo
+expect_user { 
+    timeout { exp_continue }
+    -re "(.*)\n";
+}
+set pass $expect_out(1,string)
+stty echo
+flush stdout
+
+puts "== Stopping Network Services\n"
+spawn sudo systemctl stop wicd.service
+expect {
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    eof 
+}
+
+puts "== Enabling USB0 link\n"
+spawn sudo ip link set usb0 up
+expect {
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    "Cannot find device*" { 
+	puts "Please connect your mobile to device and enable USB tethering.\n"
+	expect_user { 
+	    timeout { exp_continue }
+	    -re "(.*)\n";
+	}
+	set id $expect_out(1,string)
+	spawn sudo ip link set usb0 up
+	exp_continue }
+    eof
+}
+spawn ip link show usb0
+
+puts "== Enabling DHCP Client\n"
+spawn sudo dhcpcd usb0
+expect {
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    "dhcpcd already running" { 
+	set dhcpcdpid [spawn cat /run/dhcpcd-usb0.pid]
+	spawn sudo kill ${dhcpcdpid}
+	expect {
+    	    "*password for*" { send "${pass}\r" ; exp_continue }
+            eof
+	}
+	exp_continue
+    }
+    "forked to background" { }
+}
+spawn ip link show usb0
+
+puts "== Connection is up\n"
+puts "Please press a key to disconnect.\n"
+expect_user { 
+    timeout { exp_continue }
+    -re "(.*)\n";
+}
+set id $expect_out(1,string)
+
+puts "== Closing connection and re-enabling services\n"
+set dhcpcdpid [spawn cat /run/dhcpcd-usb0.pid]
+spawn sudo kill ${dhcpcdpid}
+expect {
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    eof  
+}
+spawn sudo ip link set usb0 down
+expect { 
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    eof  
+}
+puts "You can now disconnect your mobile device.\n"
+spawn sudo systemctl start wicd.service
+expect { 
+    "*password for*" { send "${pass}\r" ; exp_continue }
+    eof  
+}
