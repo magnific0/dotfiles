@@ -2,3 +2,9 @@ auto-save-list/
 ede-projects.el
 elpa/
 srecode-map.el
+.emacs.desktop
+.session
+ac-comphist.dat
+history
+recentf
+semanticdb/

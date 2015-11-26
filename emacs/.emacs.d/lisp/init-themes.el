@@ -4,6 +4,9 @@
 (when (< emacs-major-version 24)
   (require-package 'color-theme))
 
+(require-package 'zenburn-theme)
+(require-package 'anti-zenburn-theme)
+
 (load-theme 'zenburn t)
 
 (set-default-font "Inconsolata-12")
