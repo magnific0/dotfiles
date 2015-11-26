@@ -9,3 +9,6 @@ history
 recentf
 semanticdb/
 .smex-items
+.emacs.desktop.lock
+org-clock-save.el
+
