@@ -8,7 +8,7 @@
 (yas-global-mode 1)
 
 ;; ECB
-(require 'ecb)
+(require-package 'ecb)
 (setq ecb-show-sources-in-directories-buffer 'always)
 (setq ecb-compile-window-height 8)
 
@@ -45,7 +45,7 @@
 (add-hook 'c++-mode-hook 'my:flymake-google-init)
 
 ;; Set Google C Style
-(require 'google-c-style)
+(require-package 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
