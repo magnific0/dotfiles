@@ -65,6 +65,7 @@
 ;;(require 'init-git)
 ;;(require 'init-github)
 
+(require 'init-eshell)
 (require 'init-crontab)
 (require 'init-textile)
 (require 'init-markdown)
