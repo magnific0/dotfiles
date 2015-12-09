@@ -23,13 +23,20 @@
 (add-hook 'c-mode-hook 'fci-mode)
 (add-hook 'c++-mode-hook 'fci-mode)
 
+;; Set the GCC version
+(setq gcc_version "5.2.0")
+
 ;; Auto-Complete Headers
 (defun my:ac-c-header-init ()
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'achead:include-directories '"/usr/include/c++/4.9.1")
-  (add-to-list 'achead:include-directories '"/usr/include/c++/4.9.1/backward")
-  (add-to-list 'achead:include-directories '"/usr/include/boost"))
+  (add-to-list 'achead:include-directories (concat "/usr/include/c++/1" gcc_version))
+  (add-to-list 'achead:include-directories (concat "/usr/include/c++/" gcc_version "/x86_64-unknown-linux-gnu"))
+  (add-to-list 'achead:include-directories (concat "/usr/include/c++/" gcc_version "/backward"))
+  (add-to-list 'achead:include-directories (concat "/usr/lib/gcc/x86_64-unknown-linux-gnu/" gcc_version "/include"))
+  (add-to-list 'achead:include-directories (concat "/usr/lib/gcc/x86_64-unknown-linux-gnu/" gcc_version "/include-fixed"))
+  (add-to-list 'achead:include-directories '"/usr/include/boost")
+  (add-to-list 'achead:include-directories '"/usr/include/eigen3"))
 ;; now let's call this function from c/c++ hooks
 (add-hook 'c++-mode-hook 'my:ac-c-header-init)
 (add-hook 'c-mode-hook 'my:ac-c-header-init)
