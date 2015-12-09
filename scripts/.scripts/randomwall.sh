@@ -4,6 +4,6 @@ if [ -n "$1" ]; then
 else
     WALLPAPER_MOOD="space" 
 fi
-DIR="~/ownCloud/Images/wallpaper/$WALLPAPER_MOOD"
-PIC=$(ls $DIR | shuf -n1)
-feh --bg-fill $DIR/$PIC
+DIR="$HOME/ownCloud/Images/wallpaper/$WALLPAPER_MOOD/"
+PIC=$(ls "$DIR" | shuf -n1)
+feh --bg-fill "$DIR/$PIC"
