@@ -14,11 +14,12 @@ KB_IDS=$(echo "${KB_LST}" | xargs -I{} sh -c "xinput list --id-only | sed -n -e 
 # Get choice from DMENU, exit if DMENU is quit improperly (e.g. ESC)
 res=$(echo "${KB_NAM}" | ${DMENU} -p "Select keyboard") || exit $?
 
-
 KB_SID=$(echo "${KB_NAM}" | grep -n "${res}" | head -1 | awk -F: '{ print $1 }')
+
 KB_EID=$(echo "${KB_IDS}" | awk "NR==${KB_SID}") 
+
 if [ -n "$KB_EID" ]; then
-    KB_LOC=$(setxkbmap -query -device ${KB_EID} | grep layout | awk '{print $2}')
+    KB_LOC=$(setxkbmap -query -device ${KB_EID} | grep layout | awk '{print $2}' | awk -F, '{print $1}')
     for i in "${!KB_LAY[@]}"; do
         if [ "${KB_LAY[$i]}" == "${KB_LOC}" ] ; then
             KB_LON=${KB_LAY[$((($i+1)%${KB_LEN}))]}
