@@ -5,10 +5,11 @@ KB_LEN=${#KB_LAY[@]}
 
 [[ -f ${HOME}/.dmenurc ]] && . ${HOME}/.dmenurc || DMENU='dmenu -i'
 
-KB_LST=$(xinput list | grep -n keyboard | grep -vi button | grep -vi hotkeys \
-        | grep -vi bus | grep -vi webcam | grep -vi virtual \
+KB_LST=$(xinput list | grep -an keyboard | grep -avi button | grep -avi hotkeys \
+        | grep -avi bus | grep -avi webcam | grep -avi virtual \
         | awk -F: '{ print $1 }')
 KB_END=$(echo "${KB_LST}" | tail -1 | awk -F: '{ print $1 }')
+echo ${KB_LST}
 KB_NAM=$(echo "${KB_LST}" | xargs -I{} sh -c "xinput list --name-only | sed -n -e {}p")
 KB_IDS=$(echo "${KB_LST}" | xargs -I{} sh -c "xinput list --id-only | sed -n -e {}p")
 
